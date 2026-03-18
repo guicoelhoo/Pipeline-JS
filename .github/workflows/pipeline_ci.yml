@@ -27,6 +27,9 @@ jobs:
       - name: Rodar lint
         run: npm run lint
 
+      - name: Run Coverage
+        run: npm run test
+
   build:
 
     runs-on: ubuntu-latest

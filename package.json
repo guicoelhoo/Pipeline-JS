@@ -5,8 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "coverage": "jest --coverage"
   },
+
+    "jest": {
+      "collectCoverage": true,
+      "coverageThreshold": {
+        "global": {
+          "lines": 70
+        }
+      }
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
