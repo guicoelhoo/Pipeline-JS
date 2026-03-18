@@ -1,6 +1,6 @@
 function soma(a, b) {
   if (a == 0){
-    return c;
+    return b;
   }
   return a + b;
 }
