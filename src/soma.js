@@ -1,6 +1,7 @@
 function soma(a, b) { 
-let resultado = a + b; 
-let x = 10; // variável inútil 
-return resultado; 
+return a + b; 
 } 
+function soma2(a, b) { 
+return a + b; 
+}
 module.exports = soma;
