@@ -8,15 +8,14 @@
     "lint": "eslint .",
     "coverage": "jest --coverage"
   },
-
-    "jest": {
-      "collectCoverage": true,
-      "coverageThreshold": {
-        "global": {
-          "lines": 70
-        }
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "lines": 70
       }
-    },
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,5 +25,8 @@
     "eslint": "^10.0.3",
     "globals": "^17.4.0",
     "jest": "^30.3.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
   }
 }

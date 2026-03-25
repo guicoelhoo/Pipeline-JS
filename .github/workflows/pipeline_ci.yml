@@ -12,7 +12,7 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
-   
+    needs: quality
 
     steps:
       - name: Scan for secrets
@@ -29,11 +29,12 @@ jobs:
       - name: Instalar dependências
         run: npm install  
 
+      - name: Verificar vulnerabilidade
+        run: npm audit --audit-level=high
 
   quality:
     runs-on: ubuntu-latest
-    needs: security
-
+  
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
