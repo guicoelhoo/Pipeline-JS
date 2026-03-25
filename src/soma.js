@@ -1,7 +1,5 @@
 function soma(a, b) { 
+eval("console.log('teste')"); // linha problemática 
 return a + b; 
 } 
-function soma2(a, b) { 
-return a + b; 
-}
 module.exports = soma;
