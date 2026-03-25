@@ -15,9 +15,6 @@ jobs:
     needs: quality
 
     steps:
-      - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v2
-
       - name: Checkout código
         uses: actions/checkout@v4
 
@@ -28,6 +25,9 @@ jobs:
       
       - name: Instalar dependências
         run: npm install  
+
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
 
       - name: Verificar vulnerabilidade
         run: npm audit --audit-level=high
