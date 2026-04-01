@@ -25,11 +25,11 @@ jobs:
       - name: Cache de dependências
         uses: actions/cache@v4
         with:
-          path:~/.npm
-          key:${{runner.os}}-node-${{ hashFiles('**/package-lock.json') }}
-      
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Instalar dependências
-        run: npm install  
+        run: npm install
 
       - name: Scan for secrets
         uses: gitleaks/gitleaks-action@v2
@@ -53,9 +53,9 @@ jobs:
       - name: Cache de dependências
         uses: actions/cache@v4
         with:
-          path:~/.npm
-          key:${{runner.os}}-node-${{ hashFiles('**/package-lock.json') }}
-      
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Instalar dependências
         run: npm install
 
@@ -93,8 +93,8 @@ jobs:
       - name: Cache de dependências
         uses: actions/cache@v4
         with:
-          path:~/.npm
-          key:${{runner.os}}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Instalar dependências
         run: npm install
@@ -131,8 +131,8 @@ jobs:
       - name: Cache de dependências
         uses: actions/cache@v4
         with:
-          path:~/.npm
-          key:${{runner.os}}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Instalar dependências
         run: npm install
