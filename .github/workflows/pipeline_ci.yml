@@ -69,8 +69,8 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2 
         with: 
           args: > 
-            -Dsonar.projectKey=edutbx_testepipeline-js
-            -Dsonar.organization=edutbx
+            -Dsonar.projectKey=guicoelhoo_Pipeline-JS
+            -Dsonar.organization=guicoelhoo
         env: 
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
