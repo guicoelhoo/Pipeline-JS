@@ -1,2 +1,2 @@
 const soma = require('./src/soma');
-console.log(soma(2, 3));
+console.log(soma(3, 3));
