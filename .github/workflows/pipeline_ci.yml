@@ -1,4 +1,4 @@
-Name: CI - Development
+name: CI - Development
 
 on:
   push:
@@ -99,7 +99,7 @@ jobs:
         run: docker compose up -d
       
       - name: Validar Comunicação (Ping)
-        run: docker compose exec -T calculadora-app ping -c 1 servico-vizinho
+        run: docker compose run -T calculadora-app ping -c 1 servico-vizinho
 
       - name: Rodar Testes Unitátios (NPM)
-        run: docker compose exec -T calculadora-app npm test
+        run: docker compose run -T calculadora-app npm test
