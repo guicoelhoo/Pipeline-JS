@@ -1,0 +1,9 @@
+services:
+  Pipeline-JS:
+    build: .
+    image: guicoelhoo/pipeline-js-ci:latest
+
+  servico-vizinho:
+    image: alpine
+    command: sleep infinity
+
