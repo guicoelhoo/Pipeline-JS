@@ -95,7 +95,7 @@ jobs:
         run: docker compose build
 
       - name: Push com Docker Compose
-        run: docker compose rush
+        run: docker compose push
 
       - name: Instalar Node
         uses: actions/setup-node@v4
