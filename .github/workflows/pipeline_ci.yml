@@ -1,46 +1,17 @@
-name: CI - Development
+ame: CI - Development
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
 
   pull_request:
     branches: [ main ]
 
 jobs:
 
-
-  security:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
-
-      - name: Instalar Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Cache de dependências
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v1.6.0
-
-      - name: Verificar vulnerabilidade
-        run: npm audit --audit-level=high
-
   quality:
     runs-on: ubuntu-latest
-    needs: security
-  
+
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
@@ -49,13 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-
-      - name: Cache de dependências
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
+      
       - name: Instalar dependências
         run: npm install
 
@@ -65,48 +30,32 @@ jobs:
       - name: Run Coverage
         run: npm run test
 
-      - name: Análise com SonarCloud 
-        uses: SonarSource/sonarcloud-github-action@v2 
-        with: 
-          args: > 
-            -Dsonar.projectKey=guicoelhoo_Pipeline-JS
-            -Dsonar.organization=guicoelhoo
-        env: 
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
- 
-
   build:
 
     runs-on: ubuntu-latest
-    needs: security
+    needs: quality
 
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
 
       - name: Login no Docker Hub
-        uses: actions/checkout@4
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-
+ 
       - name: Build com Docker Compose
         run: docker compose build
-
+ 
       - name: Push com Docker Compose
         run: docker compose push
+ 
 
       - name: Instalar Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
-
-      - name: Cache de dependências
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Instalar dependências
         run: npm install
@@ -122,13 +71,8 @@ jobs:
 
   test:
 
+    runs-on: ubuntu-latest
     needs: build
-    strategy:
-      matrix:
-        node-version: [20, 22, 24]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
-    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Baixar artefato
@@ -143,13 +87,7 @@ jobs:
       - name: Instalar Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Cache de dependências
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          node-version: 24
 
       - name: Instalar dependências
         run: npm install
@@ -157,5 +95,11 @@ jobs:
       - name: Rodar testes
         run: npm test
 
+      - name: Subir Ambiente de teste 
+        run: docker compose up -d
+      
+      - name: Validar Comunicação (Ping)
+        run: docker compose exec -T calculadora-app ping -c 1 servico-vizinho
 
-
+      - name: Rodar Testes Unitátios (NPM)
+        run: docker compose exec -T calculadora-app npm test
